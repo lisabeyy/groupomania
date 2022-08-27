@@ -72,7 +72,7 @@ const PostShare = () => {
       <div>
         <input
           type="text"
-          placeholder="What's happening?"
+          placeholder="Quoi de neuf ?"
           required
           ref={desc}
         />
@@ -85,21 +85,8 @@ const PostShare = () => {
             <UilScenery />
             Photo
           </div>
-
-          <div className="option" style={{ color: "var(--video)" }}>
-            <UilPlayCircle />
-            Video
-          </div>
-          <div className="option" style={{ color: "var(--location)" }}>
-            <UilLocationPoint />
-            Location
-          </div>
-          <div className="option" style={{ color: "var(--shedule)" }}>
-            <UilSchedule />
-            Shedule
-          </div>
           <button
-            className="button ps-button"
+            className="button primary ps-button"
             onClick={handleUpload}
             disabled={loading}
           >

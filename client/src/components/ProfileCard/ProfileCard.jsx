@@ -1,22 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./ProfileCard.css";
 import Cover from "../../img/cover.jpg";
 import Profile from "../../img/profileImg.jpg";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { logout } from "../../actions/AuthActions";
+import { UilPen } from "@iconscout/react-unicons";
+import ProfileModal from "../ProfileModal/ProfileModal";
+
 const ProfileCard = ({location}) => {
+
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.authReducer.authData);
   const posts = useSelector((state)=>state.postReducer.posts)
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
+  const [modalOpened, setModalOpened] = useState(false);
+
+
+  
+
+  const handleLogOut = ()=> {
+    dispatch(logout())
+  }
 
   return (
     <div className="ProfileCard">
       <div className="ProfileImages">
-        <img src={
-            user.coverPicture
-              ? serverPublic + user.coverPicture
-              : serverPublic + "defaultCover.jpg"
-          } alt="CoverImage" />
         <img
           src={
             user.profilePicture
@@ -30,6 +39,8 @@ const ProfileCard = ({location}) => {
         <span>{user.firstname} {user.lastname}</span>
         <span>{user.worksAt? user.worksAt : 'Write about yourself'}</span>
       </div>
+
+   
 
       <div className="followStatus">
         <hr />
@@ -62,11 +73,27 @@ const ProfileCard = ({location}) => {
       {location === "profilePage" ? (
         ""
       ) : (
-        <span>
-          <Link to={`/profile/${user._id}`} style={{ textDecoration: "none", color: "inherit" }}>
-            My Profile
-          </Link>
-        </span>
+
+      <div className="ProfileInfo">
+          <div style={{ textAlign: "center", paddingBottom: "16px" }}>
+          <span style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }} onClick={() => setModalOpened(true)}>
+            Edit Profile 
+            <UilPen
+              width="2rem"
+              height="1.2rem"
+            />
+          </span>
+
+          <button className="button logout-button" onClick={handleLogOut}>Log Out</button>
+           
+            <ProfileModal
+              modalOpened={modalOpened}
+              setModalOpened={setModalOpened}
+              data = {user}
+            />
+          </div>
+      </div>
+        
       )}
     </div>
   );

@@ -32,8 +32,6 @@ const Post = ({ data }) => {
           style={{ cursor: "pointer" }}
           onClick={handleLike}
         />
-        <img src={Comment} alt="" />
-        <img src={Share} alt="" />
       </div>
 
       <span style={{ color: "var(--gray)", fontSize: "12px" }}>
