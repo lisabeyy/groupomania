@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useSta } from "react";
 import { getTimelinePosts } from "../../actions/PostsAction";
 import Post from "../Post/Post";
 import { useSelector, useDispatch } from "react-redux";
@@ -10,6 +10,13 @@ const Posts = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.authReducer.authData);
   let { posts, loading } = useSelector((state) => state.postReducer);
+
+  const [, updateState] = React.useState();
+  const forceUpdate = React.useCallback(() => updateState({}), []);
+  const refresher = (val) => {
+    forceUpdate();
+  }
+
   useEffect(() => {
     dispatch(getTimelinePosts(user._id));
   }, []);
@@ -20,7 +27,7 @@ const Posts = () => {
       {loading
         ? "Fetching posts...."
         : posts.map((post, id) => {
-            return <Post data={post} key={id} />;
+            return <Post data={post} key={id} refresher={refresher}/>;
           })}
     </div>
   );
