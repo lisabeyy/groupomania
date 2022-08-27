@@ -4,7 +4,6 @@ import Home from "./pages/Home";
 import Auth from "./pages/Auth/Auth";
 import Profile from "./pages/Profile/Profile";
 import { useSelector } from "react-redux";
-import Chat from "./pages/Chat/Chat";
 
 function App() {
   const user = useSelector((state) => state.authReducer.authData);
@@ -13,7 +12,7 @@ function App() {
       className="App"
       style={{
         height:
-          window.location.href === "http://localhost:3000/chat"
+          window.location.href === process.env.REACT_APP_API_BASE_URL
             ? "calc(100vh - 2rem)"
             : "auto",
       }}
@@ -44,11 +43,6 @@ function App() {
               <p>There's nothing here!</p>
             </main>
           }
-        />
-
-        <Route
-          path="/chat"
-          element={user ? <Chat /> : <Navigate to="../auth" />}
         />
       </Routes>
     </div>
