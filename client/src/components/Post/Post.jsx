@@ -23,9 +23,9 @@ const Post = ({refresher, data }) => {
 
   const handleToUpdate = () => refresher('');
   const handleDelete = () => {
-    handleToUpdate();
-    deletePost(data._id, user._id);
-
+    deletePost(data._id, user._id).then( r => {
+      handleToUpdate();
+    });
   };
 
   return (

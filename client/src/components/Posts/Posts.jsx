@@ -14,6 +14,7 @@ const Posts = () => {
   const [, updateState] = React.useState();
   const forceUpdate = React.useCallback(() => updateState({}), []);
   const refresher = (val) => {
+    dispatch(getTimelinePosts(user._id));
     forceUpdate();
   }
 
