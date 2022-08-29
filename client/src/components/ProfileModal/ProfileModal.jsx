@@ -57,7 +57,7 @@ const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
         console.log(err);
       }
     }
-    dispatch(updateUser(param.id, UserData));
+    dispatch(updateUser(user._id, UserData));
     setModalOpened(false);
   };
 
