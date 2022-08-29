@@ -4,7 +4,7 @@ import Comment from "../../img/comment.png";
 import Share from "../../img/share.png";
 import Heart from "../../img/like.png";
 import NotLike from "../../img/notlike.png";
-import { likePost, deletePost } from "../../api/PostsRequests";
+import { likePost, deletePost, updatePost } from "../../api/PostsRequests";
 import { useSelector } from "react-redux";
 import { UilTrashAlt } from "@iconscout/react-unicons";
 
@@ -24,6 +24,12 @@ const Post = ({refresher, data }) => {
   const handleToUpdate = () => refresher('');
   const handleDelete = () => {
     deletePost(data._id, user._id).then( r => {
+      handleToUpdate();
+    });
+  };
+
+  const handleUpdate = () => {
+    updatePost(data._id, user._id).then( r => {
       handleToUpdate();
     });
   };

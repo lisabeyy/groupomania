@@ -100,47 +100,17 @@ const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
             value={formData.worksAt}
             onChange={handleChange}
             type="text"
-            placeholder="Works at"
+            placeholder="Write something about yourself"
             name="worksAt"
             className="infoInput"
           />
         </div>
 
-        <div>
-          <input
-            value={formData.livesIn}
-            onChange={handleChange}
-            type="text"
-            placeholder="Lives in"
-            name="livesIn"
-            className="infoInput"
-          />
-          <input
-            value={formData.country}
-            onChange={handleChange}
-            type="text"
-            placeholder="Country"
-            name="country"
-            className="infoInput"
-          />
-        </div>
-
-        <div>
-          <input
-            value={formData.relationship}
-            onChange={handleChange}
-            type="text"
-            className="infoInput"
-            placeholder="Relationship status"
-            name="relationship"
-          />
-        </div>
 
         <div>
           Profile image
           <input type="file" name="profileImage" onChange={onImageChange} />
-          Cover image
-          <input type="file" name="coverImage" onChange={onImageChange} />
+    
         </div>
 
         <button className="button infoButton" type="submit">
