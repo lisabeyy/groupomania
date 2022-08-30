@@ -1,19 +1,23 @@
 import React, { useState } from "react";
 import "./Post.css";
-import Comment from "../../img/comment.png";
-import Share from "../../img/share.png";
 import Heart from "../../img/like.png";
+import Comment from "../../img/comment.png";
 import NotLike from "../../img/notlike.png";
 import { likePost, deletePost, updatePost } from "../../api/PostsRequests";
 import { useSelector } from "react-redux";
 import { UilTrashAlt } from "@iconscout/react-unicons";
+import { UilPen } from "@iconscout/react-unicons";
+import PostModal from "../PostModal/PostModal";
 
 const Post = ({refresher, data }) => {
   const { user } = useSelector((state) => state.authReducer.authData);
   const [liked, setLiked] = useState(data.likes.includes(user._id));
   const [likes, setLikes] = useState(data.likes.length)
+  const [modalOpened, setModalOpened] = useState(false);
+  const [postData, setPostData] = useState(null);
 
   
+  console.log('data changed', postData)
   const handleLike = () => {
     likePost(data._id, user._id);
     setLiked((prev) => !prev);
@@ -24,16 +28,16 @@ const Post = ({refresher, data }) => {
   const handleToUpdate = () => refresher('');
   const handleDelete = () => {
     deletePost(data._id, user._id).then( r => {
-      handleToUpdate();
+     handleToUpdate();
     });
   };
 
-  const handleUpdate = () => {
-    updatePost(data._id, user._id).then( r => {
-      handleToUpdate();
-    });
+  const handleModal = (val) => {
+    setModalOpened(val);
   };
 
+
+  
   return (
     <div className="Post">
       <img
@@ -48,7 +52,16 @@ const Post = ({refresher, data }) => {
           style={{ cursor: "pointer" }}
           onClick={handleLike}
         />
-        {data.userId == user._id && 
+          <img src={Comment} alt="" />
+        {data.userId == (data._id, user._id )&& 
+            <UilPen
+            style={{ cursor: "pointer" }}
+            onClick={() => setModalOpened(true)}
+            width="2rem"
+            height="1.2rem"
+          />
+       }
+       {data.userId == user._id && 
             <UilTrashAlt
             style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}
             onClick={handleDelete}
@@ -56,7 +69,8 @@ const Post = ({refresher, data }) => {
             height="1.2rem"
           />
         }
-       
+
+
       </div>
 
       <span style={{ color: "var(--gray)", fontSize: "12px" }}>
@@ -66,9 +80,17 @@ const Post = ({refresher, data }) => {
         <span>
           <b>{data.name} </b>
         </span>
-        <span>{data.desc}</span>
+        <span>{postData ? postData.desc : data.desc}</span>
       </div>
+      <PostModal
+          modalOpened={modalOpened}
+          setPostData={setPostData}
+          setModalOpened={setModalOpened}
+          data = {data}
+      />
     </div>
+
+    
   );
 };
 

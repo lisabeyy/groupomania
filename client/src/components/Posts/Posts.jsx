@@ -1,4 +1,4 @@
-import React, { useEffect, useSta } from "react";
+import React, { useEffect,  } from "react";
 import { getTimelinePosts } from "../../actions/PostsAction";
 import Post from "../Post/Post";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,6 +11,7 @@ const Posts = () => {
   const { user } = useSelector((state) => state.authReducer.authData);
   let { posts, loading } = useSelector((state) => state.postReducer);
 
+  console.log('user', user)
   const [, updateState] = React.useState();
   const forceUpdate = React.useCallback(() => updateState({}), []);
   const refresher = (val) => {

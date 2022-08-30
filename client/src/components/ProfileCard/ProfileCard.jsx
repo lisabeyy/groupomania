@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./ProfileCard.css";
-import Cover from "../../img/cover.jpg";
-import Profile from "../../img/profileImg.jpg";
+
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+
 import { logout } from "../../actions/AuthActions";
 import { UilPen } from "@iconscout/react-unicons";
 import ProfileModal from "../ProfileModal/ProfileModal";

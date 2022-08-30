@@ -31,12 +31,11 @@ export const getPost = async (req, res) => {
 // update post
 export const updatePost = async (req, res) => {
   const postId = req.params.id;
-  const { userId } = req.body;
-
+  const { userId } = req.body.data;
   try {
     const post = await PostModel.findById(postId);
     if (post.userId === userId) {
-      await post.updateOne({ $set: req.body });
+      await post.updateOne({ $set: req.body.data });
       res.status(200).json("Post updated!");
     } else {
       res.status(403).json("Authentication failed");
@@ -61,6 +60,7 @@ export const deletePost = async (req, res) => {
     res.status(500).json(error);
   }
 };
+
 
 // like/dislike a post
 export const likePost = async (req, res) => {

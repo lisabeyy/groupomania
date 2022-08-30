@@ -17,5 +17,27 @@ const authMiddleWare = async (req, res, next) => {
     console.log(error);
   }
 };
+// For User Profile
+const isUser = (req, res, next) => {
+  auth(req, res, () => {
+    if (req.user._id === req.params.id || req.user.isAdmin) {
+      next();
+    } else {
+      res.status(403).send("Access denied. Not authorized...");
+    }
+  });
+};
+
+// For Admin
+const isAdmin = (req, res, next) => {
+  auth(req, res, () => {
+    if (req.user.isAdmin) {
+      next();
+    } else {
+      res.status(403).send("Access denied. Not authorized...");
+    }
+  });
+};
+
 
 export default authMiddleWare;
