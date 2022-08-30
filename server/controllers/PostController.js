@@ -32,9 +32,10 @@ export const getPost = async (req, res) => {
 export const updatePost = async (req, res) => {
   const postId = req.params.id;
   const { userId } = req.body.data;
+  console.log('data', req.body.data);
   try {
     const post = await PostModel.findById(postId);
-    if (post.userId === userId) {
+    if (post.userId === userId || req.body.data.isAdmin) {
       await post.updateOne({ $set: req.body.data });
       res.status(200).json("Post updated!");
     } else {
@@ -46,11 +47,12 @@ export const updatePost = async (req, res) => {
 // delete a post
 export const deletePost = async (req, res) => {
   const id = req.params.id;
-  const { userId } = req.body;
+  const { userId, isAdmin } = req.body;
+
 
   try {
     const post = await PostModel.findById(id);
-    if (post.userId === userId) {
+    if (post.userId === userId || isAdmin) {
       await post.deleteOne();
       res.status(200).json("Post deleted.");
     } else {

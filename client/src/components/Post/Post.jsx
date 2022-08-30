@@ -17,7 +17,6 @@ const Post = ({refresher, data }) => {
   const [postData, setPostData] = useState(null);
 
   
-  console.log('data changed', postData)
   const handleLike = () => {
     likePost(data._id, user._id);
     setLiked((prev) => !prev);
@@ -27,15 +26,10 @@ const Post = ({refresher, data }) => {
 
   const handleToUpdate = () => refresher('');
   const handleDelete = () => {
-    deletePost(data._id, user._id).then( r => {
+    deletePost(data._id, user._id, user.isAdmin).then( r => {
      handleToUpdate();
     });
   };
-
-  const handleModal = (val) => {
-    setModalOpened(val);
-  };
-
 
   
   return (
@@ -53,7 +47,7 @@ const Post = ({refresher, data }) => {
           onClick={handleLike}
         />
           <img src={Comment} alt="" />
-        {data.userId == (data._id, user._id )&& 
+        {(data.userId == user._id || user.isAdmin === true) && 
             <UilPen
             style={{ cursor: "pointer" }}
             onClick={() => setModalOpened(true)}
@@ -61,7 +55,7 @@ const Post = ({refresher, data }) => {
             height="1.2rem"
           />
        }
-       {data.userId == user._id && 
+       {(data.userId == user._id || user.isAdmin === true) && 
             <UilTrashAlt
             style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}
             onClick={handleDelete}

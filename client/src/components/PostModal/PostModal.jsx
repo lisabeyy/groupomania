@@ -45,6 +45,7 @@ const PostModal = ({ modalOpened, setModalOpened, setPostData, data }) => {
       id: PostData._id,
       userId: user._id,
       desc: PostData.desc,
+      isAdmin: user.isAdmin
     };
 
     // if there is an image with post
@@ -90,27 +91,6 @@ const PostModal = ({ modalOpened, setModalOpened, setPostData, data }) => {
             placeholder="Quoi de neuf ?"
             name="desc"
           />
-        <div className="postOptions">
-          <div
-            className="option"
-            style={{ color: "var(--photo)" }}
-            onClick={() => imageRef.current.click()}
-          >
-            <UilScenery />
-            Photo
-          </div>
-
-          <div style={{ display: "none" }}>
-            <input type="file" ref={imageRef} onChange={onImageChange} />
-          </div>
-        </div>
-
-        {image && (
-          <div className="previewImage">
-            <UilTimes onClick={() => setImage(null)} />
-            <img src={URL.createObjectURL(image)} alt="preview" />
-          </div>
-        )}
       </div>
 
         <button className="button infoButton" type="submit">
